@@ -12,6 +12,7 @@ public class Customer {
 
     private String firstName;
     private String lastName;
+    private String phoneNumber;
 
     public Customer() {
     }
@@ -19,6 +20,12 @@ public class Customer {
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Customer(String firstName, String lastName, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -47,4 +54,11 @@ public class Customer {
         return id;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

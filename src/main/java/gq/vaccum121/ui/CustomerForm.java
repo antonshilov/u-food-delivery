@@ -30,6 +30,7 @@ public class CustomerForm extends FormLayout {
     private String id = null;
     private TextField firstName = new TextField("First Name:");
     private TextField lastName = new TextField("Last Name:");
+    private TextField phoneNumber = new TextField("Phone Number:");
 
     public CustomerForm() {
         initForm();
@@ -39,28 +40,22 @@ public class CustomerForm extends FormLayout {
         id = customer.getId();
         firstName.setValue(customer.getFirstName());
         lastName.setValue(customer.getLastName());
+        phoneNumber.setValue(customer.getPhoneNumber());
     }
 
     private void initForm() {
         addComponent(firstName);
         addComponent(lastName);
+        addComponent(phoneNumber);
 
         final Button commit = new Button("Commit");
         final Button cancel = new Button("Cancel");
 
-        cancel.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                clearAndHide();
-            }
-        });
-        commit.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                commitForm();
-                fireCommitEvent();
-                clearAndHide();
-            }
+        cancel.addClickListener((Button.ClickListener) event -> clearAndHide());
+        commit.addClickListener((Button.ClickListener) event -> {
+            commitForm();
+            fireCommitEvent();
+            clearAndHide();
         });
 
         final HorizontalLayout buttonBar = new HorizontalLayout();
@@ -77,10 +72,11 @@ public class CustomerForm extends FormLayout {
             Customer customer = customerService.findOne(id);
             customer.setFirstName(firstName.getValue());
             customer.setLastName(lastName.getValue());
+            customer.setPhoneNumber(phoneNumber.getValue());
             customerService.save(customer);
         } else {
             log.info("Creating user with name {} and address {}", firstName.getValue(), lastName.getValue());
-            customerService.save(new Customer(firstName.getValue(), lastName.getValue()));
+            customerService.save(new Customer(firstName.getValue(), lastName.getValue(), phoneNumber.getValue()));
         }
     }
 
