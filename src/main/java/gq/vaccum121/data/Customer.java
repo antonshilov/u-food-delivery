@@ -13,8 +13,17 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private Address address;
 
     public Customer() {
+    }
+
+    public Customer(String id, String firstName, String lastName, String phoneNumber, Address address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public Customer(String firstName, String lastName) {
@@ -60,5 +69,13 @@ public class Customer {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
