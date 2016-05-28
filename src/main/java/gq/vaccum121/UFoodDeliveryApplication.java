@@ -14,6 +14,8 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
     private CustomerRepository repository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private  DishRepository dishRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(UFoodDeliveryApplication.class, args);
@@ -23,10 +25,20 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         repository.deleteAll();
-
+        dishRepository.deleteAll();
         // save a couple of customers
-        repository.save(new Customer("Alice", "Smith"));
-        repository.save(new Customer("Bob", "Smith"));
+        repository.save(new Customer("Alice", "Smith","89138488"));
+        repository.save(new Customer("Bob", "Smith","8800888080"));
+        repository.save(new Customer("Maggy", "Preper","12345567"));
+
+        // save food and drink
+        dishRepository.save(new Dish("Pizza",400,1000));
+        dishRepository.save(new Dish("Ice Cream",20,10));
+        dishRepository.save(new Dish("Coca-Cola",100,200));
+        dishRepository.save(new Dish("Bread",100,5));
+        dishRepository.save(new Dish("Spaghetti",150,390));
+        dishRepository.save(new Dish("Tea",150,100));
+        dishRepository.save(new Dish("Chicken",500,1300));
 
         // fetch all customers
         System.out.println("Customers found with findAll():");

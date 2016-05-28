@@ -19,12 +19,12 @@ public class Order {
     private String phoneNumber;
     private Integer price;
     private List<Dish> dishes;
-    private Address address;
+    private String address;
 
     public Order() {
     }
 
-    public Order(String id, LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, Address address) {
+    public Order(String id, LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, String address) {
         this.id = id;
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
@@ -43,6 +43,15 @@ public class Order {
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
         this.phoneNumber = phoneNumber;
+        this.setStatus(Status.TO_COOK);
+    }
+
+    public Order(LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber,Integer price,List<Dish>dishes,String address) {
+        this.orderTime = orderTime;
+        this.deliveryTime = deliveryTime;
+        this.phoneNumber = phoneNumber;
+        this.dishes = dishes;
+        this.address = address;
         this.setStatus(Status.TO_COOK);
     }
 
@@ -80,11 +89,11 @@ public class Order {
         this.phoneNumber = phoneNumber;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

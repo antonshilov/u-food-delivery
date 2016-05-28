@@ -1,4 +1,4 @@
-package gq.vaccum121.ui.Order;
+package gq.vaccum121.ui;
 
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.FormLayout;

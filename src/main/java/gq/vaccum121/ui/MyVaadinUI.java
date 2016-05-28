@@ -7,12 +7,12 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import gq.vaccum121.ui.AddDishes.AddDishesForm;
 import gq.vaccum121.ui.AddDishes.AddDishesView;
 import gq.vaccum121.ui.Release.ReleaseView;
 import gq.vaccum121.ui.event.EventSystem;
 import gq.vaccum121.ui.event.ReloadEntriesEvent;
 import gq.vaccum121.ui.kitchen.KitchenUIView;
+import gq.vaccum121.ui.order.OrderUIView;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -45,9 +45,9 @@ public class MyVaadinUI extends UI {
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        navigationBar.addComponent(createNavigationButton("Default View",
-                DefaultView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("MongoDB View",
+        navigationBar.addComponent(createNavigationButton("Order View",
+                OrderUIView.VIEW_NAME));
+        navigationBar.addComponent(createNavigationButton("Customer View",
                 MongoDBUIView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Kitchen View",
                 KitchenUIView.VIEW_NAME));
