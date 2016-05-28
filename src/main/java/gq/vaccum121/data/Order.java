@@ -3,6 +3,7 @@ package gq.vaccum121.data;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,6 +97,9 @@ public class Order {
     }
 
     public List<Dish> getDishes() {
+        if (dishes == null) {
+            dishes = new ArrayList<>();
+        }
         return dishes;
     }
 

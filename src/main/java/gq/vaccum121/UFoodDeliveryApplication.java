@@ -1,9 +1,6 @@
 package gq.vaccum121;
 
-import gq.vaccum121.data.Customer;
-import gq.vaccum121.data.CustomerRepository;
-import gq.vaccum121.data.Order;
-import gq.vaccum121.data.OrderRepository;
+import gq.vaccum121.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -49,6 +46,8 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
         }
         orderRepository.deleteAll();
         Order order = new Order(LocalDateTime.now(), LocalDateTime.now());
+        order.getDishes().add(new Dish("gg", "Hui", 150, 200));
+        order.getDishes().add(new Dish("sas", "Zhopa", 160, 500));
         orderRepository.save(order);
         orderRepository.findAll().forEach(System.out::println);
 

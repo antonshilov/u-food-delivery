@@ -14,6 +14,13 @@ public class Dish {
     private Integer weight;
     private Integer price;
 
+    public Dish(String id, String name, Integer weight, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.weight = weight;
+        this.price = price;
+    }
+
     public Dish(String name, Integer weight, Integer price) {
         this.name = name;
         this.weight = weight;
