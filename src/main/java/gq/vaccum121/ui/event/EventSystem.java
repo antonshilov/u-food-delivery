@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class EventSystem implements Serializable {
     private static final long serialVersionUID = 7829012291289167478L;
     private static final Blackboard blackboard = new Blackboard();
+    private static boolean isRegister=false;
 
     public EventSystem() {
         init();
@@ -24,7 +25,10 @@ public class EventSystem implements Serializable {
     }
 
     public void registerEvent(Class<? extends Listener> listenerClass, Class<? extends Event> eventClass) {
-        blackboard.register(listenerClass, eventClass);
+        if(!isRegister) {
+            blackboard.register(listenerClass, eventClass);
+            isRegister=true;
+        }
     }
 
     public <T extends Listener> void addListener(T listener) {
