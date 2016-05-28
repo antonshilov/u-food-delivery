@@ -68,14 +68,11 @@ public class MongoDBUIView extends VerticalLayout implements View, ReloadEntries
         entityTable.setHeight("300px");
 
         // table select listener
-        entityTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
-            @Override
-            public void itemClick(ItemClickEvent event) {
-                selectedId = (String) event.getItemId();
-                selectedCustomer = mongodbContainer.getItem(selectedId).getBean();
+        entityTable.addItemClickListener((ItemClickEvent.ItemClickListener) event -> {
+            selectedId = (String) event.getItemId();
+            selectedCustomer = mongodbContainer.getItem(selectedId).getBean();
 
-                LOG.info("Selected item id {" + selectedId + "}");
-            }
+            LOG.info("Selected item id {" + selectedId + "}");
         });
         // button bar
         final AbstractLayout buttonBar = initButtonBar();

@@ -12,8 +12,7 @@ public class Order {
 
     @Id
     private String id;
-
-    private int status;
+    private Status status;
     private LocalDateTime orderTime;
     private LocalDateTime deliveryTime;
     private String phoneNumber;
@@ -24,24 +23,26 @@ public class Order {
     public Order() {
     }
 
-    public Order(String id,LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, Address address) {
+    public Order(String id, LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, Address address) {
         this.id = id;
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.setStatus(0);
+        this.setStatus(Status.TO_COOK);
     }
 
     public Order(LocalDateTime orderTime, LocalDateTime deliveryTime) {
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
+        this.setStatus(Status.TO_COOK);
     }
 
     public Order(LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber) {
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
         this.phoneNumber = phoneNumber;
+        this.setStatus(Status.TO_COOK);
     }
 
     @Override
@@ -102,11 +103,13 @@ public class Order {
         this.dishes = dishes;
     }
 
-    public int getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
+
+    public enum Status {TO_COOK, TO_DELIVERY, DELIVERY, DELIVERED}
 }
