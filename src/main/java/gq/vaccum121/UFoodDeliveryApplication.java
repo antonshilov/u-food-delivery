@@ -1,19 +1,21 @@
 package gq.vaccum121;
 
-import gq.vaccum121.data.*;
+import gq.vaccum121.data.Customer;
+import gq.vaccum121.data.CustomerRepository;
+import gq.vaccum121.data.Dish;
+import gq.vaccum121.data.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDateTime;
-
 @SpringBootApplication
 public class UFoodDeliveryApplication implements CommandLineRunner {
     @Autowired
     private CustomerRepository repository;
+
     @Autowired
-    private OrderRepository orderRepository;
+    private  DishRepository dishRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(UFoodDeliveryApplication.class, args);
@@ -23,10 +25,14 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         repository.deleteAll();
+        dishRepository.deleteAll();
 
         // save a couple of customers
         repository.save(new Customer("Alice", "Smith"));
         repository.save(new Customer("Bob", "Smith"));
+
+        dishRepository.save(new Dish("Pizza",200,300));
+        dishRepository.save(new Dish("Coca-Cola",200,29));
 
         // fetch all customers
         System.out.println("Customers found with findAll():");
@@ -44,12 +50,6 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
         for (Customer customer : repository.findByLastName("Smith")) {
             System.out.println(customer);
         }
-        orderRepository.deleteAll();
-        Order order = new Order(LocalDateTime.now(), LocalDateTime.now());
-        order.getDishes().add(new Dish("gg", "Hui", 150, 200));
-        order.getDishes().add(new Dish("sas", "Zhopa", 160, 500));
-        orderRepository.save(order);
-        orderRepository.findAll().forEach(System.out::println);
 
     }
 }

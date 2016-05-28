@@ -3,14 +3,17 @@ package gq.vaccum121.ui;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.VerticalLayout;
 import gq.vaccum121.ui.Order.OrderForm;
 import gq.vaccum121.ui.event.EventSystem;
 import gq.vaccum121.ui.event.ReloadEntriesEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 @SpringView(name = DefaultView.VIEW_NAME)
+@UIScope
 public class DefaultView extends VerticalLayout implements View,ReloadEntriesEvent.ReloadEntriesListener {
     /*
      * This view is registered automatically based on the @SpringView annotation.
@@ -18,7 +21,7 @@ public class DefaultView extends VerticalLayout implements View,ReloadEntriesEve
      */
     public static final String VIEW_NAME = "";
 
-
+    //@Autowired
     private OrderForm orderForm = new OrderForm();
 
     //@Autowired
