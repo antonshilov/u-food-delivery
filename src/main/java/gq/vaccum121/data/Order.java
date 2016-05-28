@@ -13,6 +13,7 @@ public class Order {
     @Id
     private String id;
 
+    private int status;
     private LocalDateTime orderTime;
     private LocalDateTime deliveryTime;
     private String phoneNumber;
@@ -23,12 +24,13 @@ public class Order {
     public Order() {
     }
 
-    public Order(String id, LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, Address address) {
+    public Order(String id,LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber, Address address) {
         this.id = id;
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.setStatus(0);
     }
 
     public Order(LocalDateTime orderTime, LocalDateTime deliveryTime) {
@@ -98,5 +100,13 @@ public class Order {
 
     public void setDishes(List<Dish> dishes) {
         this.dishes = dishes;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
