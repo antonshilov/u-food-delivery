@@ -31,6 +31,7 @@ public class CustomerForm extends FormLayout {
     private TextField firstName = new TextField("First Name:");
     private TextField lastName = new TextField("Last Name:");
     private TextField phoneNumber = new TextField("Phone Number:");
+    private TextField address = new TextField("Address:");
 
     public CustomerForm() {
         initForm();
@@ -41,12 +42,14 @@ public class CustomerForm extends FormLayout {
         firstName.setValue(customer.getFirstName());
         lastName.setValue(customer.getLastName());
         phoneNumber.setValue(customer.getPhoneNumber());
+        address.setValue(customer.getAddress());
     }
 
     private void initForm() {
         addComponent(firstName);
         addComponent(lastName);
         addComponent(phoneNumber);
+        addComponent(address);
 
         final Button commit = new Button("Commit");
         final Button cancel = new Button("Cancel");
@@ -73,6 +76,7 @@ public class CustomerForm extends FormLayout {
             customer.setFirstName(firstName.getValue());
             customer.setLastName(lastName.getValue());
             customer.setPhoneNumber(phoneNumber.getValue());
+            customer.setAddress(address.getValue());
             customerService.save(customer);
         } else {
             log.info("Creating user with name {} and address {}", firstName.getValue(), lastName.getValue());
@@ -83,6 +87,8 @@ public class CustomerForm extends FormLayout {
     private void clearAndHide() {
         firstName.setValue("");
         lastName.setValue("");
+        phoneNumber.setValue("");
+        address.setValue("");
         id = null;
         setVisible(false);
     }
