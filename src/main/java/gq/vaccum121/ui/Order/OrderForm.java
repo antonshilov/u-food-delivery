@@ -1,7 +1,6 @@
-package gq.vaccum121.ui;
+package gq.vaccum121.ui.Order;
 
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Label;
@@ -29,8 +28,9 @@ public class OrderForm extends FormLayout {
 
     private String id = null;
     private Label orderTime = new Label("Order time: ");
+    private Label deliveryTime = new Label("Delivery time: ");
     private InlineDateField orderDate = new InlineDateField();
-
+    private InlineDateField deliveryDate = new InlineDateField();
 
     public OrderForm() {
         initForm();
@@ -42,8 +42,16 @@ public class OrderForm extends FormLayout {
         orderDate.setTimeZone(TimeZone.getTimeZone("UTC"));
         orderDate.setLocale(Locale.US);
         orderDate.setResolution(Resolution.MINUTE);
+        deliveryDate.setValue(new Date());
+        deliveryDate.setImmediate(true);
+        deliveryDate.setTimeZone(TimeZone.getTimeZone("UTC"));
+        deliveryDate.setLocale(Locale.US);
+        deliveryDate.setResolution(Resolution.MINUTE);
         addComponent(orderTime);
         addComponent(orderDate);
+        addComponent(deliveryTime);
+        addComponent(deliveryDate);
+        
 
     }
 }
