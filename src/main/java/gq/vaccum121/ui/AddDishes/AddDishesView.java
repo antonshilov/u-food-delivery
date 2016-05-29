@@ -7,7 +7,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import gq.vaccum121.data.*;
-import gq.vaccum121.ui.CustomerForm;
 import gq.vaccum121.ui.event.EventSystem;
 import gq.vaccum121.ui.event.ReloadEntriesEvent;
 import org.apache.commons.logging.Log;

@@ -9,6 +9,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import gq.vaccum121.ui.AddDishes.AddDishesView;
 import gq.vaccum121.ui.Release.ReleaseView;
+import gq.vaccum121.ui.courier.CourierUIView;
 import gq.vaccum121.ui.customer.CustomerUIView;
 import gq.vaccum121.ui.event.EventSystem;
 import gq.vaccum121.ui.event.ReloadEntriesEvent;
@@ -56,7 +57,8 @@ public class MyVaadinUI extends UI {
                 AddDishesView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Release View",
                 ReleaseView.VIEW_NAME));
-
+        navigationBar.addComponent(createNavigationButton("Courier View",
+                CourierUIView.VIEW_NAME));
 
         root.addComponent(navigationBar);
 
