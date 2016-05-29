@@ -1,5 +1,6 @@
 package gq.vaccum121.ui.order;
 
+import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -23,7 +24,7 @@ import java.util.*;
 
 @SpringView(name = OrderUIView.VIEW_NAME)
 @UIScope
-public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEvent.ReloadEntriesListener {
+public class OrderUIView extends HorizontalLayout implements View, ReloadEntriesEvent.ReloadEntriesListener {
     /*
      * This view is registered automatically based on the @SpringView annotation.
      * As it has an empty string as its view name, it will be shown when navigating to the Homepage
@@ -31,8 +32,6 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
     public static final String VIEW_NAME = "";
     private static final Log LOG = LogFactory.getLog(OrderUIView.class);
 
-    @Autowired
-    private EventSystem eventSystem;
 
     @Autowired
     private DishRepository dishRepository;
@@ -46,12 +45,21 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
     @Autowired
     private DishContainer dishesContainer;
 
+    @Autowired
+    private FullOrderContainer orderContainer;
+
+    @Autowired
+    private EventSystem eventSystem;
+
     private PopupDateField orderTimeDateField;
     private PopupDateField deliveryTimeDateField;
     private NativeSelect customerNativeSelect;
     private Button createOrderButton;
     private TwinColSelect dishTwinColSelect;
     private Label totalPriceLabel;
+    private VerticalLayout verticalLayout;
+    private Table ordersTable;
+    private Button cancelOrderButton;
 
     //Full list of dishes
     private List<Dish> dishList;
@@ -62,6 +70,9 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
     private List<Customer> customerList;
     //Index of selected customer
     private int selectedCustomerIndex;
+
+    private String selectedId;
+    private Order selectedOrder;
 
     @PostConstruct
     void init() {
@@ -103,6 +114,13 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
         }
         customerNativeSelect.setImmediate(true);
 
+        // load data
+        List<Order> all = orderRepository.findAll();
+        LOG.info(all);
+        // clear table
+        orderContainer.removeAllItems();
+        // set table data
+        orderContainer.addAll(all);
     }
 
     @SuppressWarnings("serial")
@@ -124,12 +142,34 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
 
         createOrderButton = new Button("Create Order", clickEvent -> createOrder());
 
-        addComponent(orderTimeDateField);
-        addComponent(deliveryTimeDateField);
-        addComponent(dishTwinColSelect);
-        addComponent(totalPriceLabel);
-        addComponent(customerNativeSelect);
-        addComponent(createOrderButton);
+        ordersTable = new Table("Orders");
+        ordersTable.setContainerDataSource(orderContainer);
+        ordersTable.setVisibleColumns(FullOrderContainer.PROPERTIES);
+        ordersTable.setColumnHeaders(FullOrderContainer.HEADERS);
+        ordersTable.setSelectable(true);
+        ordersTable.setWidth("100%");
+        ordersTable.setHeight("100%");
+
+        // table select listener
+        ordersTable.addItemClickListener((ItemClickEvent.ItemClickListener) event -> {
+            selectedId = (String) event.getItemId();
+            selectedOrder = orderContainer.getItem(selectedId).getBean();
+            LOG.info("Selected item id {" + selectedId + "}");
+        });
+
+        cancelOrderButton = new Button("Cancel",clickEvent -> cancelOrder());
+
+        verticalLayout = new VerticalLayout();
+        verticalLayout.addComponent(orderTimeDateField);
+        verticalLayout.addComponent(deliveryTimeDateField);
+        verticalLayout.addComponent(dishTwinColSelect);
+        verticalLayout.addComponent(totalPriceLabel);
+        verticalLayout.addComponent(customerNativeSelect);
+        verticalLayout.addComponent(createOrderButton);
+
+        addComponent(verticalLayout);
+        addComponent(ordersTable);
+        addComponent(cancelOrderButton);
     }
 
     //create the order
@@ -150,8 +190,9 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
                 customerList.get(selectedCustomerIndex).getAddress()));
 
         Notification.show("Order has been successfully created!", Notification.Type.TRAY_NOTIFICATION);
-
+        reloadEntries(new ReloadEntriesEvent());
     }
+
 
     //parse Date to LocalDateTime
     private LocalDateTime parseLocalDateTime(Date date){
@@ -190,8 +231,15 @@ public class OrderUIView extends VerticalLayout implements View, ReloadEntriesEv
         return totalPrice;
     }
 
+    private void cancelOrder(){
+        selectedOrder.setStatus(Order.Status.CANCEL);
+        orderRepository.save(selectedOrder);
+        eventSystem.fire(new ReloadEntriesEvent());
+    }
+
     @Override
     public void reloadEntries(ReloadEntriesEvent event) {
-
+        initData();
     }
+
 }

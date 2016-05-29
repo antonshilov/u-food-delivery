@@ -49,6 +49,7 @@ public class Order {
     public Order(LocalDateTime orderTime, LocalDateTime deliveryTime, String phoneNumber,Integer price,List<Dish>dishes,String address) {
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
+        this.price=price;
         this.phoneNumber = phoneNumber;
         this.dishes = dishes;
         this.address = address;
@@ -124,5 +125,5 @@ public class Order {
         this.status = status;
     }
 
-    public enum Status {TO_COOK, TO_DELIVERY, DELIVERY, DELIVERED}
+    public enum Status {TO_COOK, TO_DELIVERY, DELIVERY, DONE, CANCEL}
 }

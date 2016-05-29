@@ -1,4 +1,4 @@
-package gq.vaccum121.ui;
+package gq.vaccum121.ui.customer;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
@@ -80,7 +80,7 @@ public class CustomerForm extends FormLayout {
             customerService.save(customer);
         } else {
             log.info("Creating user with name {} and address {}", firstName.getValue(), lastName.getValue());
-            customerService.save(new Customer(firstName.getValue(), lastName.getValue(), phoneNumber.getValue()));
+            customerService.save(new Customer(firstName.getValue(), lastName.getValue(), phoneNumber.getValue(), address.getValue()));
         }
     }
 

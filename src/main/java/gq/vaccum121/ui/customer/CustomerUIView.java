@@ -1,4 +1,4 @@
-package gq.vaccum121.ui;
+package gq.vaccum121.ui.customer;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
@@ -18,11 +18,11 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 
-@SpringView(name = MongoDBUIView.VIEW_NAME)
+@SpringView(name = CustomerUIView.VIEW_NAME)
 @UIScope
-public class MongoDBUIView extends VerticalLayout implements View, ReloadEntriesEvent.ReloadEntriesListener {
+public class CustomerUIView extends VerticalLayout implements View, ReloadEntriesEvent.ReloadEntriesListener {
     public static final String VIEW_NAME = "mongodbui";
-    private static final Log LOG = LogFactory.getLog(MongoDBUIView.class);
+    private static final Log LOG = LogFactory.getLog(CustomerUIView.class);
 
     private Table entityTable;
     private String selectedId;
@@ -32,7 +32,7 @@ public class MongoDBUIView extends VerticalLayout implements View, ReloadEntries
     private Button editButton;
 
     @Autowired
-    private MongoDBContainer mongodbContainer;
+    private CustomerContainer mongodbContainer;
 
     @Autowired
     private CustomerForm editForm;
@@ -61,8 +61,8 @@ public class MongoDBUIView extends VerticalLayout implements View, ReloadEntries
         // vaadin table
         entityTable = new Table();
         entityTable.setContainerDataSource(mongodbContainer);
-        entityTable.setVisibleColumns(MongoDBContainer.PROPERTIES);
-        entityTable.setColumnHeaders(MongoDBContainer.HEADERS);
+        entityTable.setVisibleColumns(CustomerContainer.PROPERTIES);
+        entityTable.setColumnHeaders(CustomerContainer.HEADERS);
         entityTable.setSelectable(true);
         entityTable.setWidth("100%");
         entityTable.setHeight("300px");

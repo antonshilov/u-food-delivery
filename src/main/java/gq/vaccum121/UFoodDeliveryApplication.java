@@ -27,9 +27,9 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
         repository.deleteAll();
         dishRepository.deleteAll();
         // save a couple of customers
-        repository.save(new Customer("Alice", "Smith","89138488"));
-        repository.save(new Customer("Bob", "Smith","8800888080"));
-        repository.save(new Customer("Maggy", "Preper","12345567"));
+        repository.save(new Customer("Alice", "Smith","89138488","Krasnoyarsk"));
+        repository.save(new Customer("Bob", "Smith","8800888080","Moscow"));
+        repository.save(new Customer("Maggy", "Preper","12345567","Kraken"));
 
         // save food and drink
         dishRepository.save(new Dish("Pizza",400,1000));

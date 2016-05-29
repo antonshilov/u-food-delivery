@@ -9,6 +9,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import gq.vaccum121.ui.AddDishes.AddDishesView;
 import gq.vaccum121.ui.Release.ReleaseView;
+import gq.vaccum121.ui.customer.CustomerUIView;
 import gq.vaccum121.ui.event.EventSystem;
 import gq.vaccum121.ui.event.ReloadEntriesEvent;
 import gq.vaccum121.ui.kitchen.KitchenUIView;
@@ -48,7 +49,7 @@ public class MyVaadinUI extends UI {
         navigationBar.addComponent(createNavigationButton("Order View",
                 OrderUIView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Customer View",
-                MongoDBUIView.VIEW_NAME));
+                CustomerUIView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Kitchen View",
                 KitchenUIView.VIEW_NAME));
         navigationBar.addComponent(createNavigationButton("Add dishes View",

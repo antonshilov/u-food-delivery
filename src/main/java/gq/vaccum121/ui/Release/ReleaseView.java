@@ -80,15 +80,10 @@ public class ReleaseView extends HorizontalLayout implements View, ReloadEntries
         dishTable = new Table("Dishes", dishesContainer);
         dishTable.setVisibleColumns(DishContainer.PROPERTIES);
         dishTable.setColumnHeaders(DishContainer.HEADERS);
-        // button bar
-//        final AbstractLayout buttonBar = initButtonBar();
-//        buttonBar.setWidth("100%");
         deliveryBtn = new Button("Released", clickEvent -> setDelivery());
         addComponent(ordersTable);
         addComponent(dishTable);
         addComponent(deliveryBtn);
-//        addComponent(buttonBar);
-//        addComponent(editForm);
     }
 
     private void initDishData(Order selectedOrder) {
