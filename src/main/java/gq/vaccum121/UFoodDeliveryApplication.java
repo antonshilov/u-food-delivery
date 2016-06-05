@@ -5,10 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.vaadin.spring.security.annotation.EnableVaadinManagedSecurity;
+import org.vaadin.spring.security.config.AuthenticationManagerConfigurer;
 
 import java.time.LocalDateTime;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class)
+@EnableVaadinManagedSecurity
 public class UFoodDeliveryApplication implements CommandLineRunner {
     @Autowired
     private CustomerRepository repository;
@@ -64,4 +69,17 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
         orderRepository.findAll().forEach(System.out::println);
 
     }
+
+    @Configuration
+    static class AuthenticationConfiguration implements AuthenticationManagerConfigurer {
+
+        @Override
+        public void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.inMemoryAuthentication()
+                    .withUser("user").password("user").roles("USER")
+                    .and()
+                    .withUser("admin").password("admin").roles("ADMIN");
+        }
+    }
+
 }
