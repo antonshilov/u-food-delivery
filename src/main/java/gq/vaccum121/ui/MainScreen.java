@@ -15,7 +15,11 @@ import gq.vaccum121.ui.event.ReloadEntriesEvent;
 import gq.vaccum121.ui.kitchen.KitchenUIView;
 import gq.vaccum121.ui.order.OrderUIView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.vaadin.spring.security.VaadinSecurity;
+
+import java.util.Collection;
 
 
 /**
@@ -26,9 +30,12 @@ import org.vaadin.spring.security.VaadinSecurity;
 public class MainScreen extends CustomComponent {
     EventSystem eventSystem;
     private SpringViewProvider viewProvider;
+    private VaadinSecurity vaadinSecurity;
+    private Button logOutButton;
 
     @Autowired
     public MainScreen(final VaadinSecurity vaadinSecurity, SpringViewProvider viewProvider, EventSystem eventSystem) {
+        this.vaadinSecurity = vaadinSecurity;
         this.viewProvider = viewProvider;
         this.eventSystem = eventSystem;
         initLayout();
@@ -44,25 +51,50 @@ public class MainScreen extends CustomComponent {
         root.setSizeFull();
         setCompositionRoot(root);
         setSizeFull();
-
         final CssLayout navigationBar = new CssLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 
-        navigationBar.addComponent(createNavigationButton("Order View",
-                OrderUIView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Customer View",
-                CustomerUIView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Kitchen View",
-                KitchenUIView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Add dishes View",
-                AddDishesView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Release View",
-                ReleaseView.VIEW_NAME));
-        navigationBar.addComponent(createNavigationButton("Courier View",
-                CourierUIView.VIEW_NAME));
+        String role = vaadinSecurity.getAuthentication().getAuthorities().toString();
+        switch(role){
+            case "[ROLE_DISPATCHER]":
+                navigationBar.addComponent(createNavigationButton("Order View",
+                        OrderUIView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Customer View",
+                        CustomerUIView.VIEW_NAME));
+                break;
+            case "[ROLE_COURIER]":
+                navigationBar.addComponent(createNavigationButton("Courier View",
+                        CourierUIView.VIEW_NAME));
+                break;
+            case "[ROLE_KITCHEN]":
+                navigationBar.addComponent(createNavigationButton("Kitchen View",
+                        KitchenUIView.VIEW_NAME));
+                break;
+            case "[ROLE_RELEASE]":
+                navigationBar.addComponent(createNavigationButton("Release View",
+                        ReleaseView.VIEW_NAME));
+                break;
+            case "[ROLE_ADMIN]":
+                navigationBar.addComponent(createNavigationButton("Order View",
+                        OrderUIView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Customer View",
+                        CustomerUIView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Kitchen View",
+                        KitchenUIView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Add dishes View",
+                        AddDishesView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Release View",
+                        ReleaseView.VIEW_NAME));
+                navigationBar.addComponent(createNavigationButton("Courier View",
+                        CourierUIView.VIEW_NAME));
+                break;
+        }
 
+        logOutButton = new Button("Log Out",clickEvent -> logOut());
+        logOutButton.addStyleName(ValoTheme.BUTTON_SMALL);
+
+        navigationBar.addComponent(logOutButton);
         root.addComponent(navigationBar);
-
         final Panel viewContainer = new Panel();
         viewContainer.setSizeFull();
         root.addComponent(viewContainer);
@@ -77,5 +109,9 @@ public class MainScreen extends CustomComponent {
         button.addStyleName(ValoTheme.BUTTON_SMALL);
         button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
         return button;
+    }
+
+    private void logOut(){
+        vaadinSecurity.logout();
     }
 }

@@ -76,9 +76,15 @@ public class UFoodDeliveryApplication implements CommandLineRunner {
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.inMemoryAuthentication()
-                    .withUser("user").password("user").roles("USER")
+                    .withUser("dispatcher").password("1234").roles("DISPATCHER")
                     .and()
-                    .withUser("admin").password("admin").roles("ADMIN");
+                    .withUser("admin").password("admin").roles("ADMIN")
+                    .and()
+                    .withUser("courier").password("1234").roles("COURIER")
+                    .and()
+                    .withUser("release").password("1234").roles("RELEASE")
+                    .and()
+                    .withUser("kitchen").password("1234").roles("KITCHEN");
         }
     }
 
